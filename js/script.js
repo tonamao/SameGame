@@ -1,6 +1,14 @@
 (function(){
   'use strict'
   
+  var rest = document.getElementById('rest');
+  var param = document.getElementById('param');
+  var nRest = 0;
+  var score = document.getElementById('score');
+  var scr = 0;
+  var clearNum = document.getElementById('clear-num');
+  
+  
   var canvas = document.getElementById('canvas');
   var c = canvas.getContext('2d');
   
@@ -53,7 +61,13 @@
       c.fillRect(this.x, this.y, BLOCK_SIZE, BLOCK_SIZE);
       c.strokeRect(this.x, this.y, BLOCK_SIZE, BLOCK_SIZE);
     }
+    
+    test(cnt){
+      c.fillStyle = 'white';
+      c.fillText(cnt, this.x, this.y+10);
+    }
   }
+  
   
   function init(){
     var cnt = 0;
@@ -64,6 +78,12 @@
         cnt++;
       }
     }
+    nRest = squares.length;
+    rest.innerText = nRest;
+    param.innerText = squares.length;
+    score.innerText = scr;
+    
+    clearNum.innerText = 10;
   }
   
   function getSquare(x, y){
@@ -85,7 +105,6 @@
       tgtBlocks[i].draw();
       deleteBlocks[dltIndex++] = tgtBlocks[i];
     }
-    tgtBlocks = [];
   };
   
   function toLeft(){
@@ -99,7 +118,7 @@
           tgtX[index] = leftTgt.x;
           index++;
         } else {
-          if (leftTgt.x == tgtX[tgtX.length - 1].x + BLOCK_SIZE) {
+          if (leftTgt.x == tgtX[tgtX.length - 1] + BLOCK_SIZE) {
             tgtX[index] = leftTgt.x;
             index++;
           }
@@ -208,20 +227,29 @@
       if (tgtBlocks.length > 1) {
         //white
         whiten();
-        
+        nRest = nRest - tgtBlocks.length;
+        scr = scr + tgtBlocks.length * 50;
+        rest.innerText = nRest;
+        param.innerText = squares.length;
+        score.innerText = scr;
+        tgtBlocks = [];
+      
         //drop
         drop();
       
         //toLeft
         var xCnt = 0;
-       while((xCnt < bX) || (getSquare(xCnt * BLOCK_SIZE, (bY - 1) * BLOCK_SIZE).deleteFlg)) {
-         toLeft();
+       while((xCnt < bX)) {
+         if (getSquare(xCnt * BLOCK_SIZE, (bY - 1) * BLOCK_SIZE).deleteFlg) {
+           toLeft();
+         }
          xCnt++;
        }
-       tgtBlocks = [];
+        
         tgtIndex = 0;
       }
     }else{//1click
+      
       //init deleteFlg = false
       for (var i = 0; i < tgtBlocks.length; i++) {
         tgtBlocks[i].chkFlg = false;
@@ -232,7 +260,6 @@
       
       //deleteFlg = true
       target.chkFlg = true;
-      
       //set targets to tgtSquares[]
       setChkFlg2Targets(target);
       for (var i = 0; i < squares.length; i++) {
@@ -242,11 +269,13 @@
           }
         }
       }
+      
       //draw with chkColor
       for (var i = 0; i < tgtBlocks.length; i++) {
         tgtBlocks[i].draw();
       }
     };
+    
   }
   
   init();
