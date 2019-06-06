@@ -6,6 +6,7 @@
   var nRest = 0;
   var score = document.getElementById('score');
   var scr = 0;
+  var result = document.getElementById('result');
   var clearNum = document.getElementById('clear-num');
   
   
@@ -21,6 +22,7 @@
   
   var bX = c.canvas.width / BLOCK_SIZE;
   var bY = c.canvas.height / BLOCK_SIZE;
+  const ALL_SUQUARES = bX * bY;
   
   var squares = [];
   var tgtBlocks = [];
@@ -82,6 +84,7 @@
     rest.innerText = nRest;
     param.innerText = squares.length;
     score.innerText = scr;
+    
     
     clearNum.innerText = 10;
   }
@@ -217,6 +220,41 @@
     }
   }
   
+  function getScore(dltBlocks){
+    var scorePoint = 0;
+    var dltedNum = ALL_SUQUARES - nRest;
+    var rateByClick = dltBlocks.length * dltBlocks.length * 0.2;
+    var scoreOfSumDltNum = dltedNum * 0.6;
+    const POINT = 50;
+    
+    scorePoint = dltBlocks.length * POINT * rateByClick + scoreOfSumDltNum;
+    return Math.floor(scorePoint);
+  }
+  
+  function getSameColorSqs(tgtSq) {
+    var sameColorSqs = [];
+    
+    return sameColorSqs;
+  }
+  
+  function isGameOver(){
+    var chkFlg = false;
+    var i = 0;
+    
+    for (var i = 0; i < squares.length; i++) {
+      if (!chkFlg) {
+        if (!squares[i++].deleteFlg) {
+          if (getSameColorSqs(squares[i]).length > 0) {
+            chkFlg = true;
+            break;
+          }
+        }
+      }
+    }
+    
+    return chkFlg;
+  }
+  
   function touchBlock(e){
     var rect = e.target.getBoundingClientRect();
     var x = e.clientX - rect.left;
@@ -227,11 +265,15 @@
       if (tgtBlocks.length > 1) {
         //white
         whiten();
+        
+        //score-board
         nRest = nRest - tgtBlocks.length;
-        scr = scr + tgtBlocks.length * 50;
+        scr = scr + getScore(tgtBlocks);
         rest.innerText = nRest;
         param.innerText = squares.length;
         score.innerText = scr;
+        //
+        
         tgtBlocks = [];
       
         //drop
@@ -247,6 +289,15 @@
        }
         
         tgtIndex = 0;
+        
+        //check clear judge
+        if (isGameOver()) {
+          result.innerText = 'GAME OVER...';
+        } else {
+          if (nRest <= 10) {
+            result.innerText = 'CLEAR!!';
+          }
+        }
       }
     }else{//1click
       
