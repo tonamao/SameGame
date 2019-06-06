@@ -3,17 +3,18 @@
   <head>
     <meta charset="UTF-8">
     <title>SameGame</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai" rel="stylesheet">
   </head>
   <body>
     <div id="game-frame">
       <div id="status-bar">
-        <div class="rule">残り<span id="clear-num"></span>個でクリア！！</div>
-        <div class="rest">残り：<span id="rest"></span>/<span id="param"></span></div>
-        <div class="score">スコア：<span id="score"></span></div>
+        <div class="rule">Cleared with remaining <span id="clear-num"></span> / 100!!</div>
+        <div class="rest">Rest : <span id="rest"></span>/<span id="param"></span></div>
+        <div class="score">Score : <span id="score"></span></div>
+        <div class="result"><span id="result"></span></div>
       </div>
       <canvas id="canvas" width="500px" height="500px"></canvas>
     </div>
-    <script src="js/script.js"></script>
   </body>
 </html>
