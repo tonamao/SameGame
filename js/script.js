@@ -10,15 +10,19 @@
   var clearNum = document.getElementById('clear-num');
   
   
-  var canvas = document.getElementById('canvas');
-  var c = canvas.getContext('2d');
+  var canvasParent = document.getElementById('canvasParent');
+  var canvas       = document.getElementById('canvas');
+  var c            = canvas.getContext('2d');
+  canvas.width     = canvasParent.clientWidth;
+  canvas.height    = canvasParent.clientHeight;
   
-  const BLOCK_SIZE = 50;
+  const BLOCK_SIZE = c.canvas.width / 10;
   const LEVEL = 2
   const BLOCK_COLOR = ['#F27398', '#FBA848', '#58BE89', '#40AAEF', '#a29bfe'];
   const CHECK_COLOR = ['#FAD0DC', '#FDD6AA', '#B0DFC3', '#9AD2F7', '#d1cdff'];
   const FRAME_COLOR = '#FFFFFF';
   const WHITE = '#FFFFFF';
+  const POINT = 50;
   
   var bX = c.canvas.width / BLOCK_SIZE;
   var bY = c.canvas.height / BLOCK_SIZE;
@@ -69,8 +73,7 @@
       c.fillText(cnt, this.x, this.y+10);
     }
   }
-  
-  
+
   function init(){
     var cnt = 0;
     for (var i = 0; i < bY; i++) {
@@ -225,7 +228,6 @@
     var dltedNum = ALL_SUQUARES - nRest;
     var rateByClick = dltBlocks.length * dltBlocks.length * 0.2;
     var scoreOfSumDltNum = dltedNum * 0.6;
-    const POINT = 50;
     
     scorePoint = dltBlocks.length * POINT * rateByClick + scoreOfSumDltNum;
     return Math.floor(scorePoint);

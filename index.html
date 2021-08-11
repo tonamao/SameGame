@@ -2,19 +2,24 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
     <title>SameGame</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai" rel="stylesheet">
   </head>
   <body>
     <div id="game-frame">
-      <div id="status-bar">
+      <div class="rule-bar">
         <div class="rule">Cleared with remaining <span id="clear-num"></span> / 100!!</div>
-        <div class="rest">Rest : <span id="rest"></span>/<span id="param"></span></div>
+      </div>
+      <div id="canvasParent" class="canvas-parent">
+        <canvas id="canvas"></canvas>
+      </div>
+      <div class="status-bar">
+        <div class="rest">Block : <span id="rest"></span>/<span id="param"></span></div>
         <div class="score">Score : <span id="score"></span></div>
         <div class="result"><span id="result"></span></div>
       </div>
-      <canvas id="canvas" width="500px" height="500px"></canvas>
     </div>
     <script src="js/script.js"></script>
   </body>
