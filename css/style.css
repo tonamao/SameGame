@@ -11,39 +11,72 @@ body {
 }
 
 #game-frame {
-  text-align: center;
-  user-select: none;
+    text-align: center;
+    user-select: none;
+    padding-top: 40px;
 }
 
-#canvas {
+.canvas-parent {
+  width: 350px;
+  height: 350px;
   background: #fff;
   user-select: none;
-  margin: 12px;
+  margin: 12px auto;
   box-shadow: 0 0 4px gray;
 }
 
-#status-bar{
+.status-bar, .rule-bar {
   background: #FFF4E1;
-  width: 500px;
   margin: auto;
   padding: 8px;
   text-align: left;
   border-radius: 8px;
   box-shadow: 0 0 4px gray;
+  width: 350px;
+  font-size: 20px;
 }
 
-.rest{
+.rest, .score, .result {
   display: inline-block;
-  margin-right: 20px;
+  margin-right: 32px;
+  font-size: 20px;
 }
 
-.score{
-  display: inline-block;
-  margin-right: 20px;
-}
-
-.result{
-  display: inline-block;
-  margin-right: 20px;
+.result {
   color: #FA776D;
+}
+
+/* For PC */
+@media screen and (min-width: 481px) {
+    .canvas-parent {
+        width: 450px;
+        height: 450px;
+    }
+
+    .status-bar, .rule-bar {
+        width: 450px;
+        font-size: 20px;
+    }
+
+    .rest, .score, .result {
+        margin-right: 20px;
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .canvas-parent {
+        width: 500px;
+        height: 500px;
+    }
+
+    .status-bar, .rule-bar {
+        width: 500px;
+        font-size: 20px;
+    }
+
+    .rest, .score, .result {
+        margin-right: 20px;
+        font-size: 20px;
+    }
 }
