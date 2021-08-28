@@ -1,43 +1,47 @@
 (function(){
-  'use strict'
-  
-  var rest = document.getElementById('rest');
-  var param = document.getElementById('param');
-  var nRest = 0;
-  var score = document.getElementById('score');
-  var scr = 0;
-  var result = document.getElementById('result');
-  var clearNum = document.getElementById('clear-num');
-  
-  
-  var canvasParent = document.getElementById('canvasParent');
-  var canvas       = document.getElementById('canvas');
-  var c            = canvas.getContext('2d');
-  canvas.width     = canvasParent.clientWidth;
-  canvas.height    = canvasParent.clientHeight;
-  
-  const BLOCK_SIZE = c.canvas.width / 10;
-  const LEVEL = 2
-  const BLOCK_COLOR = ['#F27398', '#FBA848', '#58BE89', '#40AAEF', '#a29bfe'];
-  const CHECK_COLOR = ['#FAD0DC', '#FDD6AA', '#B0DFC3', '#9AD2F7', '#d1cdff'];
-  const FRAME_COLOR = '#FFFFFF';
-  const WHITE = '#FFFFFF';
-  const POINT = 50;
-  
-  var bX = c.canvas.width / BLOCK_SIZE;
-  var bY = c.canvas.height / BLOCK_SIZE;
-  const ALL_SUQUARES = bX * bY;
-  
-  var squares = [];
-  var tgtBlocks = [];
-  var tgtIndex = 0;
-  var deleteBlocks = [];
-  var blockNum = bX * bY;
-  
-  var deletedClmX = 0;
-  var numDltX = 0
-  
-  canvas.addEventListener('click', touchBlock, false);
+    'use strict'
+
+    let rest     = document.getElementById('rest');
+    let param    = document.getElementById('param');
+    let nRest    = 0;
+    let score    = document.getElementById('score');
+    let scr      = 0;
+    let result   = document.getElementById('result');
+    let clearNum = document.getElementById('clear-num');
+
+    let canvasParent = document.getElementById('canvasParent');
+    let canvas       = document.getElementById('canvas');
+    let c            = canvas.getContext('2d');
+    canvas.width     = canvasParent.clientWidth;
+    canvas.height    = canvasParent.clientHeight;
+
+    const BLOCK_SIZE = c.canvas.width / 10;
+    const LEVEL = 2
+    const BLOCK_COLOR = ['#F27398', '#FBA848', '#58BE89', '#40AAEF', '#a29bfe'];
+    const CHECK_COLOR = ['#FAD0DC', '#FDD6AA', '#B0DFC3', '#9AD2F7', '#d1cdff'];
+    const FRAME_COLOR = '#FFFFFF';
+    const WHITE = '#FFFFFF';
+    const POINT = 50;
+
+    let bX = c.canvas.width / BLOCK_SIZE;
+    let bY = c.canvas.height / BLOCK_SIZE;
+    const ALL_SUQUARES = bX * bY;
+
+    let squares      = [];
+    let tgtBlocks    = [];
+    let tgtIndex     = 0;
+    let deleteBlocks = [];
+    let blockNum     = bX * bY;
+
+    let deletedClmX = 0;
+    let numDltX     = 0;
+
+    canvas.addEventListener('click', touchBlock, false);
+    Array.from(document.getElementsByClassName("clear-modal-close")).forEach(selector => {
+        selector.addEventListener('click', function() {
+            location.reload(); //FIXME: initにする
+        }, false);
+    });
   
   class Square {
     constructor(x, y){
@@ -75,6 +79,8 @@
   }
 
   function init(){
+    document.getElementById("game-frame").style.zIndex = 2000;
+    document.getElementById("clearModal").style.opacity = 0;
     var cnt = 0;
     for (var i = 0; i < bY; i++) {
       for (var j = 0; j < bX; j++) {
@@ -314,6 +320,9 @@
         // check clear judge
         if (isFinished()) {
             result.innerText = 'CLEAR!!';
+            document.getElementById("game-frame").style.zIndex = 100;
+            document.getElementById("clearModal").style.opacity = 1;
+            document.getElementById("modalScore").innerText = scr;
         }
       }
     } else { // 1click
