@@ -319,6 +319,7 @@
                     result.innerText = 'CLEAR!!';
                     document.getElementById("game-frame").style.zIndex = 100;
                     document.getElementById("clearModal").style.opacity = 1;
+                    document.getElementById("clearModal").style.backgroundColor = "rgb(0,0,0,0.5)";
                     document.getElementById("modalScore").innerText = scr;
                 }
             }

@@ -48,11 +48,6 @@ body {
     color: #FA776D;
 }
 
-.modal-content {
-    background-color: #FFF4E1;
-    font-size: 20px;
-}
-
 /* For PC */
 @media screen and (min-width: 481px) {
     .canvas-parent {
@@ -87,3 +82,63 @@ body {
         font-size: 20px;
     }
 }
+
+.modal {
+    padding-top: 48px;
+}
+
+.modal-overlay {
+    box-shadow: 0 0 4px gray;
+}
+
+.modal-content {
+    background: #FFF4E1;
+    font-size: 20px;
+    width: 320px;
+}
+
+.modal-header {
+    border-bottom: 1px solid #d6d6d6;
+}
+
+.modal-footer {
+    border-top: 1px solid #d6d6d6;
+}
+
+.modal-score {
+    color: #FA776D;
+    text-align: right;
+    float: right;
+}
+
+.ranking {
+    padding: 12px auto;
+}
+
+.table {
+    font-size: 16px;
+    background: #fff;
+    counter-reset: rowCount;
+    color: #636363;
+}
+
+.table-bordered {
+    border-top: solid 1px #d6d6d6;
+}
+
+table > tbody > tr {
+    counter-increment: rowCount;
+}
+
+.table thead th {
+    border: solid 1px #d6d6d6;
+}
+
+.table > tbody > tr > td {
+    border: solid 1px #d6d6d6;
+}
+
+table > tbody > tr > td:first-child::before {
+    content: counter(rowCount);
+}
+
