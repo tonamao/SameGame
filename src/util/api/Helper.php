@@ -8,8 +8,10 @@ class Helper
 
     protected function __construct()
     {
-        $this->config = include(__DIR__ . '/Config.php');
-        $this->url    = $this->config['score_history']['api-server'].':'.$this->config['score_history']['port'];
+        $this->config    = include(__DIR__ . '/Config.php');
+        $api_server_host = !is_null(getenv('API_SERVER_HOST')) ? getenv('API_SERVER_HOST') : $this->config['score_history']['api_server_host'];
+        $api_server_port = !is_null(getenv('API_SERVER_PORT')) ? getenv('API_SERVER_PORT') : $this->config['score_history']['api_server_port'];
+        $this->url       = 'http://'.$api_server_host.':'.$api_server_port;
     }
 
     public static function getInstance() {
@@ -25,7 +27,7 @@ class Helper
      */
     public function get($query_params=null)
     {
-        $url = $this->url.'/'.$this->config['score_history']['get-uri'];
+        $url = $this->url.'/'.$this->config['score_history']['get_uri'];
         $query = static::_generateQuery($query_params);
         $url = $url.$query;
 
