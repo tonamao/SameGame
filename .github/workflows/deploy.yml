@@ -8,7 +8,6 @@ on:
 name: Deploy to Amazon ECS
 
 env:
-  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
   ECR_REPOSITORY_APP: ${{ secrets.AWS_ECR_APP_REPO_NAME }}
   ECR_REPOSITORY_WEB: ${{ secrets.AWS_ECR_WEB_REPO_NAME }}
   CONTAINER_NAME_APP: php
@@ -35,6 +34,8 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-php-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
           # Build a docker container and
           # push it to ECR so that it can
@@ -62,6 +63,8 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-nginx-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
           # Build a docker container and
           # push it to ECR so that it can
