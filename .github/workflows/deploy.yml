@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - develop
+      - docker
 
 name: Deploy to Amazon ECS
 
