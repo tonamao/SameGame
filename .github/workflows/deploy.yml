@@ -18,6 +18,8 @@ jobs:
   build-php:
     name: build-php
     runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.build-php-image.outputs.image}}
     environment: develop
 
     steps:
@@ -51,6 +53,8 @@ jobs:
   build-nginx:
     name: build-nginx
     runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.build-nginx-image.outputs.image}}
     environment: develop
 
     steps:
@@ -109,7 +113,7 @@ jobs:
         with:
           task-definition: task-definition.json
           container-name: ${{ env.CONTAINER_NAME_APP }}
-          image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.build-php.steps.build-php-image.outputs.image }}
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.build-php.outputs.image }}
 
       - name: Fill in the new NIGINX image ID in the Amazon ECS task definition
         id: task-def-modified-web
@@ -117,7 +121,7 @@ jobs:
         with:
           task-definition: ${{ steps.task-def-modified-app.outputs.task-definition }}
           container-name: ${{ env.CONTAINER_NAME_WEB }}
-          image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.build-nginx.steps.build-nginx-image.outputs.image }}
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.build-nginx.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
