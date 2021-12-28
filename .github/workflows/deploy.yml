@@ -48,7 +48,7 @@ jobs:
           # be deployed to ECS.
           docker build -f docker/Dockerfile.php . -t $ECR_REGISTRY/${{ env.ECR_REPOSITORY_APP }}:$IMAGE_TAG
           docker push $ECR_REGISTRY/${{ env.ECR_REPOSITORY_APP }}:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/${{ env.ECR_REPOSITORY_APP }}:$IMAGE_TAG"
+          echo "::set-output name=image::$IMAGE_TAG"
 
   build-nginx:
     name: build-nginx
@@ -83,7 +83,7 @@ jobs:
           # be deployed to ECS.
           docker build -f docker/Dockerfile.nginx . -t $ECR_REGISTRY/${{ env.ECR_REPOSITORY_WEB }}:$IMAGE_TAG
           docker push $ECR_REGISTRY/${{ env.ECR_REPOSITORY_WEB }}:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/${{ env.ECR_REPOSITORY_WEB }}:$IMAGE_TAG"
+          echo "::set-output name=image::$IMAGE_TAG"
 
   deploy:
     name: Deploy
@@ -113,7 +113,7 @@ jobs:
         with:
           task-definition: task-definition.json
           container-name: ${{ env.CONTAINER_NAME_APP }}
-          image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.build-php.outputs.image }}
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_APP }}:${{ needs.build-php.outputs.image }}
 
       - name: Fill in the new NIGINX image ID in the Amazon ECS task definition
         id: task-def-modified-web
@@ -121,7 +121,7 @@ jobs:
         with:
           task-definition: ${{ steps.task-def-modified-app.outputs.task-definition }}
           container-name: ${{ env.CONTAINER_NAME_WEB }}
-          image: ${{ steps.login-ecr.outputs.registry }}/${{ needs.build-nginx.outputs.image }}
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_WEB }}:${{ needs.build-nginx.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
