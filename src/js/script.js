@@ -324,14 +324,19 @@
                     // ツイートボタン押下時にテキストを動的に変更してツイート
                     document.getElementById("twitter-share-button").onclick = function() {
                         // 出力結果を取得
-                        let text = "SameGame by tonamao!\nスコア: " + scr.toLocaleString();
+                        let text = "■□■SameGame by tona■□■\nスコア: " + scr.toLocaleString() + "\n";
 
                         // オプションパラメータを設定
                         let hashtags = "tonamao_samegame";
                         let url = encodeURIComponent(location.href)  // location.hrefは今いるURL
 
+                        let account = "tonamao_enen";
                         // URLを生成して遷移
-                        window.open("https://twitter.com/share?text=" + encodeURI(text) + "&hashtags=" + hashtags + "&url=" + url + "&related=tonamao_enen");
+                        window.open("https://twitter.com/share?text=" + encodeURI(text)
+                            + "&url=" + url
+                            + "&via=" + account
+                            + "&hashtags=" + hashtags
+                            + "&related=" + account);
                     }
                 }
             }
