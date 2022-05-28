@@ -7,7 +7,6 @@
     let score    = document.getElementById('score');
     let scr      = 0;
     let result   = document.getElementById('result');
-    let clearNum = document.getElementById('clear-num');
 
     let canvasParent = document.getElementById('canvasParent');
     let canvas       = document.getElementById('canvas');
@@ -93,8 +92,6 @@
         rest.innerText  = nRest;
         param.innerText = squares.length;
         score.innerText = scr;
-
-        clearNum.innerText = 10;
     }
 
     function getSquare(x, y){
@@ -231,13 +228,12 @@
     }
 
     function getScore(dltBlocks) {
-        let scorePoint       = 0;
-        let dltedNum         = ALL_SUQUARES - nRest;
-        let rateByClick      = dltBlocks.length * dltBlocks.length * 0.2;
-        let scoreOfSumDltNum = dltedNum * 0.6;
-
-        scorePoint = dltBlocks.length * POINT * rateByClick + scoreOfSumDltNum;
-        return Math.floor(scorePoint);
+        let deletedNum       = ALL_SUQUARES - nRest;
+        const specialMinNum = 6;
+        let specialPoint = dltBlocks.length - specialMinNum;
+        let specialRate = specialPoint > 1 ? specialPoint : 1;
+        let numScore = (dltBlocks.length - 2) * (dltBlocks.length - 2) * specialRate;
+        return (deletedNum - 2) * (deletedNum - 2);
     }
 
     function isFinished() {
@@ -320,11 +316,13 @@
                     document.getElementById("game-frame").style.zIndex = 100;
                     document.getElementById("clearModal").style.opacity = 1;
                     document.getElementById("clearModal").style.backgroundColor = "rgb(0,0,0,0.5)";
+                    document.getElementById("modalRest").innerText = nRest;
                     document.getElementById("modalScore").innerText = scr;
                     // ツイートボタン押下時にテキストを動的に変更してツイート
                     document.getElementById("twitter-share-button").onclick = function() {
                         // 出力結果を取得
-                        let text = "■□■SameGame by tona■□■\nスコア: " + scr.toLocaleString() + "\n";
+                        let text = "■□■SameGame by tona■□■\nスコア: " + scr.toLocaleString() + "\n"
+                                    + "残りブロック: " + nRest + "個\n";
 
                         // オプションパラメータを設定
                         let hashtags = "tonamao_samegame";

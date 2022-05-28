@@ -13,7 +13,7 @@
 <body>
     <div id="game-frame">
       <div class="rule-bar">
-        <div class="rule">Cleared with remaining <span id="clear-num"></span> / 100!!</div>
+        <div class="rule">Remove Blocks!!</div>
       </div>
       <div id="canvasParent" class="canvas-parent">
         <canvas id="canvas"></canvas>
@@ -24,21 +24,21 @@
         <div class="game-result"><span id="result"></span></div>
       </div>
     </div>
-    <!-- -->
 
     <div class="modal fade modal-dialog-centered" id="clearModal" tabindex="-1" role="dialog" aria-labelledby="clear-label" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-overlay">
                 <div class="modal-content" id="modalContent">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="clear-label">SCORE RESULT</h5>
+                        <h5 class="modal-title" id="clear-label">RESULT</h5>
                         <button type="button" class="close clear-modal-close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div id="clearModalBody">
-                            <h4>Your Score : <div id="modalScore" class="modal-score"></div></h4>
+                        <div id="clearModalBody" class="modal-result">
+                            <div>Your Score : <div id="modalScore" class="modal-score"></div></div>
+                            <div>Rest Block : <div id="modalRest" class="modal-rest"></div></div>
                         </div>
                         <div class="tweet" id="tweet">
                             <button id="twitter-share-button"><i class="fab fa-twitter"></i>ツイートする</button>
@@ -47,7 +47,6 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary clear-modal-close" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary clear-modal-close">OK</button>
                     </div>
                 </div>
