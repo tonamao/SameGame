@@ -90,6 +90,7 @@ body {
 
 .modal {
     padding-top: 48px;
+    justify-content: center;
 }
 
 .modal-overlay {
